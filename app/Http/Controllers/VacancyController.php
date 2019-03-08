@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Vacancy;
 
 class VacancyController extends Controller
 {
@@ -13,7 +14,8 @@ class VacancyController extends Controller
      */
     public function index()
     {
-        //
+        $vacancies = Vacancy::all();
+        return view('admin.index', compact('vacancies'));
     }
 
     /**
@@ -23,7 +25,7 @@ class VacancyController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.add');
     }
 
     /**
@@ -34,7 +36,14 @@ class VacancyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|max:100',
+            'description' => 'required|max:255'
+        ]);
+
+        $result = Vacancy::create($data);
+
+        return redirect('/admin/vacancies')->with('success', 'Вакансия добавлена.');
     }
 
     /**
@@ -56,7 +65,8 @@ class VacancyController extends Controller
      */
     public function edit($id)
     {
-        //
+        $vacancy = Vacancy::findOrFail($id);
+        return view('admin.edit', compact('vacancy'));
     }
 
     /**
@@ -68,7 +78,13 @@ class VacancyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|max:100',
+            'description' => 'required|max:255'
+        ]);
+
+        Vacancy::whereId($id)->update($data);
+        return redirect('/admin/vacancies')->with('success', 'Вакансия обновлена.');
     }
 
     /**
@@ -79,6 +95,9 @@ class VacancyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $vacancy = Vacancy::findOrFail($id);
+        $vacancy->delete();
+
+        return redirect('/admin/vacancies')->with('success', 'Вакансия удалена.');
     }
 }

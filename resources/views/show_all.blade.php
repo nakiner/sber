@@ -26,7 +26,7 @@
                     <td>{{$vacancy->description}}</td>
                     <td>{{$vacancy->counter}}</td>
                     <td>
-                        <a href="{{ route('vacancies.show',$vacancy->id)}}" class="btn btn-primary">Просмотр</a>
+                        <a href="{{ route('vacancy.item',$vacancy->id)}}" class="btn btn-primary">Просмотр</a>
                     </td>
                 </tr>
             @endforeach

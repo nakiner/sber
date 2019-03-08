@@ -25,6 +25,11 @@
                     <label for="desctiption">Описание ванасии:</label>
                     <textarea class="form-control" name="description"></textarea>
                 </div>
+                <div class="form-group">
+                    @csrf
+                    <label for="counter">Счетчик:</label>
+                    <input type="text" class="form-control" name="counter"/>
+                </div>
                 <button type="submit" class="btn btn-primary">Создать вакансию</button>
             </form>
         </div>

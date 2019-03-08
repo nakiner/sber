@@ -38,7 +38,8 @@ class VacancyController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|max:100',
-            'description' => 'required|max:255'
+            'description' => 'required|max:255',
+            'counter' => 'required|max:10',
         ]);
 
         $result = Vacancy::create($data);
@@ -88,7 +89,8 @@ class VacancyController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|max:100',
-            'description' => 'required|max:255'
+            'description' => 'required|max:255',
+            'counter' => 'required|max:10',
         ]);
 
         $vacancy = Vacancy::findOrFail($id);

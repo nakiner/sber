@@ -26,6 +26,10 @@
                     <label for="description">Описание вакансии:</label>
                     <textarea type="text" class="form-control" name="description">{{$vacancy->description}}</textarea>
                 </div>
+                <div class="form-group">
+                    <label for="counter">Счетчик:</label>
+                    <input type="text" class="form-control" name="counter" value="{{$vacancy->counter}}"/>
+                </div>
                 <button type="submit" class="btn btn-primary">Обновить вакансию</button>
             </form>
         </div>

@@ -14,6 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/vacancy', 'VacancyController@displayAll');
+Route::get('/vacancy/{id}', 'VacancyController@show')->where('id', '[0-9]+');
 
 Auth::routes();
 

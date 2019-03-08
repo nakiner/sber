@@ -22,6 +22,15 @@ class Vacancy extends Model
         'counter' => [
             'type' => 'integer'
         ],
+        'created_at' => [
+            'type' => 'text',
+            "analyzer" => "standard",
+            "fielddata"=> true,
+        ],
+        'updated_at' => [
+            'type' => 'text',
+            "analyzer" => "standard",
+        ],
     );
 
 }

@@ -42,6 +42,7 @@ class VacancyController extends Controller
         ]);
 
         $result = Vacancy::create($data);
+        $result->addToIndex();
 
         return redirect('/admin/vacancies')->with('success', 'Вакансия добавлена.');
     }
@@ -54,7 +55,14 @@ class VacancyController extends Controller
      */
     public function show($id)
     {
-        //
+        $vacancy = $updateVacancy = Vacancy::findOrFail($id);
+        $updateVacancy->counter++;
+
+        Vacancy::whereId($id)->update($updateVacancy->toArray());
+        $vacancy->removeFromIndex();
+        $updateVacancy->addToIndex();
+
+        return view('show', compact('vacancy'));
     }
 
     /**
@@ -83,7 +91,14 @@ class VacancyController extends Controller
             'description' => 'required|max:255'
         ]);
 
-        Vacancy::whereId($id)->update($data);
+        $vacancy = Vacancy::findOrFail($id);
+        $vacancy->update($data);
+
+        $vacancy->removeFromIndex();
+        $vacancy->name = $data['name'];
+        $vacancy->description = $data['description'];
+        $vacancy->addToIndex();
+
         return redirect('/admin/vacancies')->with('success', 'Вакансия обновлена.');
     }
 
@@ -96,8 +111,19 @@ class VacancyController extends Controller
     public function destroy($id)
     {
         $vacancy = Vacancy::findOrFail($id);
+        $vacancy->removeFromIndex();
         $vacancy->delete();
 
         return redirect('/admin/vacancies')->with('success', 'Вакансия удалена.');
+    }
+
+    /**
+     * Показ всех карточек посредством ElasticSearch
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function displayAll() {
+        $vacancies = Vacancy::searchByQuery('', null, ['name', 'description', 'counter'], 6,  null, ['id' => 'desc']);
+        return view('show_all', compact('vacancies'));
     }
 }

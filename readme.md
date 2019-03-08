@@ -6,8 +6,9 @@
 - Выгрузите миграции `php artisan migrate`
 - Сгенерируйте данные `php artisan db:seed`
 - Создайте индекс `php artisan vacancy:init-index`
+- Запустите сервер `php artisan serve`
 
 ## Доп функции
 
 - Для пересоздания индекса используйте `php artisan vacancy:rebuild-index`
-- Для удаления используйте `php artisan vacancy:drop-index`
+- Для удаления индекса используйте `php artisan vacancy:drop-index`

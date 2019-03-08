@@ -14,7 +14,7 @@ return array(
     */
 
     'config' => [
-        'hosts'     => ['192.168.1.100:9200'],
+        'hosts'     => explode(',', env('ES_HOST')),
         'retries'   => 1,
     ],
 
@@ -27,6 +27,6 @@ return array(
     | Elasticquent models.
     */
 
-    'default_index' => 'vacancies',
+    'default_index' => env('ES_INDEX', 'vacancy'),
 
 );
